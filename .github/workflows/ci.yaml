@@ -86,15 +86,11 @@ jobs:
        docker pull pygoat/pygoat:latest
        docker run --rm -d -p 8000:8000 pygoat/pygoat:latest
 
-   - name: ZAP baseline
-     uses: zaproxy/action-baseline@v0.4.0
-     with:
-       target: 'http://localhost:8000'
-       
-   - name: Print ZAP reports
+   - name: Run Arachni
      run: |
-       echo "---Summary Report---"
-       cat zap.out
-       echo "---Detailed Report---"
-       cat zap.out.md    
+       docker run --rm -v $(pwd):/work arachni/arachni arachni http://localhost:8000
       
+   - name: Print Arachni reports
+     run: |
+       echo "--Arachni Report--"
+       cat arachni_report.json
