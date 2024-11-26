@@ -86,9 +86,9 @@ jobs:
        docker pull pygoat/pygoat:latest
        docker run --rm -d -p 8000:8000 pygoat/pygoat:latest
 
-   - name: Run Arachni
+   - name: Run Arachni scan
      run: |
-       docker run --rm -v $(pwd):/work arachni/arachni arachni http://localhost:8000
+       docker run --rm -it --link=target arachni/arachni arachni http://localhost:8000 --report-save-to=arachni_report.json
       
    - name: Print Arachni reports
      run: |
